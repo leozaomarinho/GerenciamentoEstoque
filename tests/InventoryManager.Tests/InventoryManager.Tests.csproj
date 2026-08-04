@@ -18,4 +18,10 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\InventoryManager.Api\InventoryManager.Api.csproj" />
+    <ProjectReference Include="..\..\src\InventoryManager.Application\InventoryManager.Application.csproj" />
+    <ProjectReference Include="..\..\src\InventoryManager.Domain\InventoryManager.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
