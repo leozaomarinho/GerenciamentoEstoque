@@ -63,4 +63,27 @@ public class Product
         }
     }
 
+    public void ValidateName(String name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException(
+                "O nome do produto é obrigatorio.");
+        }
+    }
+
+    public void ValidatePrice(decimal price){
+        if (price < 0) {
+            throw new ArgumentException(
+                "O preço nao pode ser menor que 0");
+        }
+    }
+
+    public void ValidateQuantity(decimal quantity)
+    {
+        if (quantity < 0) {  }
+        throw new ArgumentException(
+                "A quantidade não pode ser menor que 0");
+    }
+
 }
