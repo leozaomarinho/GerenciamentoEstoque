@@ -27,3 +27,5 @@ namespace InventoryManager.Domain.Entities
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
+//O domínio define o contrato.
+//A infraestrutura implementa.

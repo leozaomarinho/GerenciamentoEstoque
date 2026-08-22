@@ -4,15 +4,10 @@ public class Product
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; } = string.Empty;
-
     public string Description { get; private set; } = string.Empty;
-
     public decimal Price { get; private set; }
-
     public int QuantityInStock { get; private set; }
-
     public DateTime CreatedAt { get; private set; }
-
     public DateTime UpdatedAt { get; private set; }
 
     private Product()
@@ -21,18 +16,17 @@ public class Product
 
     public Product(Guid id, string name, string description, decimal price, int quantityInStock, DateTime createdAt, DateTime updatedAt)
     {
-        Id = Guid.NewGuid;
+        Id = id == Guid.Empty ? Guid.NewGuid() : id;
         Name = name;
         Description = description;
         Price = price;
         QuantityInStock = quantityInStock;
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
+        CreatedAt = createdAt == default ? DateTime.UtcNow : createdAt;
+        UpdatedAt = updatedAt == default ? DateTime.UtcNow : updatedAt;
     }
 
-    public void Update(String name, String description, decimal price)
+    public void Update(string name, string description, decimal price)
     {
-
         ValidateName(name);
         ValidatePrice(price);
 
@@ -40,12 +34,10 @@ public class Product
         Description = description;
         Price = price;
         UpdatedAt = DateTime.UtcNow;
-
     }
 
     public void AddStock(int quantity)
     {
-
         ValidateQuantity(quantity);
 
         QuantityInStock += quantity;
@@ -58,32 +50,34 @@ public class Product
 
         if (quantity > QuantityInStock)
         {
-            throw new InvalidOperationException(
-                "Estoque Insuficiente.");
+            throw new InvalidOperationException("Estoque Insuficiente.");
         }
+
+        QuantityInStock -= quantity;
+        UpdatedAt = DateTime.UtcNow;
     }
 
-    public void ValidateName(String name)
+    public void ValidateName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
-            throw new ArgumentException(
-                "O nome do produto é obrigatorio.");
+            throw new ArgumentException("O nome do produto é obrigatório.");
         }
     }
 
-    public void ValidatePrice(decimal price){
-        if (price < 0) {
-            throw new ArgumentException(
-                "O preço nao pode ser menor que 0");
-        }
-    }
-
-    public void ValidateQuantity(decimal quantity)
+    public void ValidatePrice(decimal price)
     {
-        if (quantity < 0) {  }
-        throw new ArgumentException(
-                "A quantidade não pode ser menor que 0");
+        if (price < 0)
+        {
+            throw new ArgumentException("O preço não pode ser menor que 0");
+        }
     }
 
+    public void ValidateQuantity(int quantity)
+    {
+        if (quantity < 0)
+        {
+            throw new ArgumentException("A quantidade não pode ser menor que 0");
+        }
+    }
 }
